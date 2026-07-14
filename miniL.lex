@@ -95,13 +95,13 @@ ALPHA    [a-zA-Z]
 
 ">="        {printf("GTE\n"); currPos += yyleng;}
 
+({DIGIT})+           {printf("NUMBER %s\n", yytext); currPos += yyleng;}
+
 ({DIGIT}|_)({ALPHA}|{DIGIT}|_)*       {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter \n", currLine, currPos, yytext); exit(0);}
 
 ({ALPHA})({ALPHA}|{DIGIT}|_)*_           {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore \n", currLine, currPos, yytext); exit(0);}
 
 {ALPHA}({ALPHA}|{DIGIT}|_)*({ALPHA}|{DIGIT})*      {printf("IDENT %s\n", yytext); currPos += yyleng;}
-
-({DIGIT})+           {printf("NUMBER %s\n", yytext); currPos += yyleng;}
 
 ";"         {printf("SEMICOLON\n"); currPos += yyleng;}
 
