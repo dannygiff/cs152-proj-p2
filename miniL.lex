@@ -125,8 +125,3 @@ ALPHA    [a-zA-Z]
 
 %%
 	/* C functions used in lexer */
-
-int main(int argc, char ** argv)
-{
-   yylex();
-}

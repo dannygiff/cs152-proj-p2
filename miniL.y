@@ -36,11 +36,11 @@
 prog_start: functions {printf("prog_start -> functions\n");}
           ;
 
-functions:   /*empty*/ {printf("functions -> epsilon\n");}
+functions: /*empty*/ {printf("functions -> epsilon\n");}
           |  function functions{printf("functions -> function functions\n");}
           ;
 
-function:  {printf("function -> FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY")}
+function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY {printf("function -> FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY\n");}
           ;
 
 declarations:   /*empty*/ {printf("declarations -> epsilon\n");}
@@ -74,7 +74,7 @@ state_a: var ASSIGN expression {printf("state_a -> var ASSIGN expression\n");}
           ;
 
 state_b: IF bool_exp THEN statements ENDIF {printf("state_b -> IF bool_exp THEN statements ENDIF\n");}
-          | IF bool_exp THEN statements ELSE statements endif {printf("state_b -> IF bool_exp THEN statements ELSE statements endif\n");}
+          | IF bool_exp THEN statements ELSE statements ENDIF {printf("state_b -> IF bool_exp THEN statements ELSE statements ENDIF\n");}
           ;
 
 state_c: WHILE bool_exp BEGINLOOP statements ENDLOOP {printf("state_c -> WHILE bool_exp BEGINLOOP statements ENDLOOP\n");}
