@@ -50,7 +50,9 @@ declarations:   /*empty*/ {printf("declarations -> epsilon\n");}
 declaration: idents COLON INTEGER {printf("declaration -> idents COLON INTEGER\n");}
           |  idents COLON ENUM L_PAREN idents R_PAREN {printf("declaration -> idents COLON ENUM L_PAREN idents R_PAREN\n");}
           |  idents COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER {printf("declaration -> idents COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
-          ;
+          |  idents INTEGER {yyerror("Syntax error, missing colon before integer");}
+          |  idents ENUM L_PAREN idents R_PAREN {yyerror("Syntax error, missing colon before enum");}
+          |  idents ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER {yyerror("Syntax error, missing colon before array");}
 
 idents: IDENT {printf("idents -> IDENT\n");}
           |  IDENT COMMA idents {printf("idents -> IDENT COMMA idents\n");}
@@ -71,6 +73,7 @@ statement: state_a {printf("statement -> state_a\n");}
           ;
 
 state_a: var ASSIGN expression {printf("state_a -> var ASSIGN expression\n");}
+          | var '=' expression {yyerror("Syntax error, use \":=\" for assignment" );}
           ;
 
 state_b: IF bool_exp THEN statements ENDIF {printf("state_b -> IF bool_exp THEN statements ENDIF\n");}

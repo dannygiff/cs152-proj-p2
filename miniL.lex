@@ -120,6 +120,8 @@ ALPHA    [a-zA-Z]
 
 ":="         {currPos += yyleng; return ASSIGN;}
 
+"="          {currPos += yyleng; return '=';}
+
 ##.+         { /* printf("COMMENT %s\n", yytext); currPos += yyleng; */ }
 
 .              {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
