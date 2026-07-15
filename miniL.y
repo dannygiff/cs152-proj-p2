@@ -54,9 +54,11 @@ declaration: idents COLON INTEGER {printf("declaration -> idents COLON INTEGER\n
           |  idents ENUM L_PAREN idents R_PAREN {yyerror("Syntax error, missing colon before enum");}
           |  idents ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER {yyerror("Syntax error, missing colon before array");}
 
-idents: IDENT {printf("idents -> IDENT\n");}
-          |  IDENT COMMA idents {printf("idents -> IDENT COMMA idents\n");}
+idents: ident {printf("idents -> ident\n");}
+          |  ident COMMA idents {printf("idents -> ident COMMA idents\n");}
           ;
+
+ident: IDENT {printf("ident -> IDENT %s\n", $1); free($1);}
 
 statements: statement SEMICOLON {printf("statements -> statement SEMICOLON\n");}
           |  statement SEMICOLON  statements {printf("statements -> statement SEMICOLON statements\n");}
@@ -149,16 +151,16 @@ term_num: var {printf("term_num -> var\n");}
           |  L_PAREN expression R_PAREN {printf("L_PAREN expression R_PAREN\n");}
           ;
 
-term_ident: IDENT L_PAREN expressions R_PAREN {printf("term_ident -> IDENT L_PAREN expressions R_PAREN\n");}
-          |  IDENT L_PAREN R_PAREN {printf("term_ident -> IDENT L_PAREN R_PAREN\n");}
+term_ident: ident L_PAREN expressions R_PAREN {printf("term_ident -> ident L_PAREN expressions R_PAREN\n");}
+          |  ident L_PAREN R_PAREN {printf("term_ident -> ident L_PAREN R_PAREN\n");}
           ;
 
 vars: var {printf("vars -> var\n");}
           |  var COMMA vars {printf("vars -> var COMMA vars\n");}
           ;
 
-var: IDENT {printf("var -> IDENT\n");}
-          |  IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET {printf("var -> IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+var: ident {printf("var -> ident\n");}
+          |  ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET {printf("var -> ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
           ;
 %% 
 
