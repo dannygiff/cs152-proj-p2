@@ -70,6 +70,31 @@ statement: state_a {printf("statement -> state_a\n");}
           |  state_h {printf("statement -> state_h\n");}
           ;
 
+state_a: var ASSIGN expression {printf("state_a -> var ASSIGN expression\n");}
+          ;
+
+state_b: IF bool_exp THEN statements ENDIF {printf("state_b -> IF bool_exp THEN statements ENDIF\n");}
+          | IF bool_exp THEN statements ELSE statements endif {printf("state_b -> IF bool_exp THEN statements ELSE statements endif\n");}
+          ;
+
+state_c: WHILE bool_exp BEGINLOOP statements ENDLOOP {printf("state_c -> WHILE bool_exp BEGINLOOP statements ENDLOOP\n");}
+          ;
+
+state_d: DO BEGINLOOP statements ENDLOOP WHILE bool_exp {printf("state_d -> DO BEGINLOOP statements ENDLOOP WHILE bool_exp\n");}
+          ;
+
+state_e: READ vars {printf("state_e -> READ vars\n");}
+          ;
+
+state_f: WRITE vars {printf("state_e -> WRITE vars\n");}
+          ;
+
+state_g: CONTINUE {printf("state_g -> CONTINUE\n");}
+          ;
+
+state_h: RETURN expression {printf("state_h -> RETURN expression\n");}
+          ;
+
 bool_exp: relation_and_exp {printf("bool_exp -> relation_and_exp\n");}
           |  relation_and_exp OR bool_exp {printf("bool_exp -> relation_and_exp OR bool_exp\n");}
           ;
@@ -100,6 +125,11 @@ expressions: expression {printf("expressions -> expression\n");}
           |  expression COMMA expressions {printf("expressions -> expression COMMA expressions\n");}
           ;
 
+expression: mult_expr {printf("expression -> mult_expr\n");}
+          |  mult_expr ADD expression {printf("expression -> mult_expr ADD expression\n");}
+          |  mult_expr SUB expression {printf("expression -> mult_expr SUB expression\n");}
+          ;
+
 mult_expr: term {printf("mult_expr -> term\n");}
           |  term MULT mult_expr {printf("mult_expr -> term MULT mult_expr\n");}
           |  term DIV mult_expr {printf("mult_expr -> term DIV mult_expr\n");}
@@ -115,10 +145,13 @@ term_num: var {printf("term_num -> var\n");}
           |  NUMBER {printf("term_num -> NUMBER\n");}
           |  L_PAREN expression R_PAREN {printf("L_PAREN expression R_PAREN\n");}
           ;
-%% 
 
 term_ident: IDENT L_PAREN expressions R_PAREN {printf("term_ident -> IDENT L_PAREN expressions R_PAREN\n");}
           |  IDENT L_PAREN R_PAREN {printf("term_ident -> IDENT L_PAREN R_PAREN\n");}
+          ;
+
+vars: var {printf("vars -> var\n");}
+          |  var COMMA vars {printf("vars -> var COMMA vars\n");}
           ;
 
 var: IDENT {printf("var -> IDENT\n");}
